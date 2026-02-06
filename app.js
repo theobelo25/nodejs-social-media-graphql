@@ -1,3 +1,4 @@
+require("dotenv").config();
 const path = require("path");
 
 const express = require("express");
@@ -11,8 +12,6 @@ const graphqlSchema = require("./graphql/schema");
 const graphqlResolver = require("./graphql/resolvers");
 const clearImage = require("./util/clearImage");
 
-// const feedRoutes = require("./routes/feed");
-// const authRoutes = require("./routes/auth");
 const auth = require("./middleware/auth");
 
 const app = express();
@@ -38,7 +37,6 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-// app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
 app.use(bodyParser.json()); // application/json
 app.use(multer({ storage, fileFilter }).single("image"));
 app.use("/images", express.static(path.join(__dirname, "images")));
@@ -96,10 +94,8 @@ app.use((err, req, res, next) => {
 });
 
 mongoose
-  .connect(
-    "mongodb+srv://theobelo25_db_user:GWRdm1B06tWMCj0Q@book-shop-db.58ldko5.mongodb.net/nodejs-social?appName=nodejs-social",
-  )
+  .connect(process.env.CONNECTION_STRING)
   .then((res) => {
-    app.listen(8080);
+    app.listen(process.env.PORT || 8080);
   })
   .catch((err) => console.error(err));
