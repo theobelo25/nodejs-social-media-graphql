@@ -1,11 +1,11 @@
-require("dotenv").config();
+const dotenv = require("dotenv").config();
 const path = require("path");
 
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const multer = require("multer");
-const { v4: uuidv4 } = require("uuid");
+const { randomUUID } = require("crypto");
 const { graphqlHTTP } = require("express-graphql");
 
 const graphqlSchema = require("./graphql/schema");
@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
     cb(null, "images");
   },
   filename: (req, file, cb) => {
-    cb(null, uuidv4());
+    cb(null, randomUUID());
   },
 });
 

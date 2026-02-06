@@ -52,7 +52,7 @@ exports.login = async (req, res, next) => {
         email: user.email,
         userId: user._id.toString(),
       },
-      "alexanderisagoodboy",
+      process.env.JWT_SECRET,
       { expiresIn: "1hr" },
     );
 

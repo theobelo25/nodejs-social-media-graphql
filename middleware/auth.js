@@ -1,7 +1,5 @@
 const jwt = require("jsonwebtoken");
 
-const handleError = require("../util/handleError");
-
 module.exports = (req, res, next) => {
   const authHeader = req.get("Authorization");
   if (!authHeader) {
@@ -13,7 +11,7 @@ module.exports = (req, res, next) => {
 
   let decodedToken;
   try {
-    decodedToken = jwt.verify(token, "alexanderisagoodboy");
+    decodedToken = jwt.verify(token, process.env.JWT_SECRET);
   } catch (error) {
     req.isAuth = false;
     return next();
